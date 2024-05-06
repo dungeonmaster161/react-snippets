@@ -1,33 +1,99 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import Header from './component/Header'
+import Todo from './component/Todo'
+import WrapperComponent from './component/WrapperComponent'
+import CallTodoAfterSeconds from './callTodoAfterSeconds/CallTodoAfterSeconds'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [random, setRandom] = useState("Random number will be generated here")
 
   return (
-    <>
+    <div>
+      {/* <HeaderWithButton /> */}
+      {/* <button onClick={()=>{
+            setRandom("My name is "+Math.random())
+          }}>Click me</button>
+          <Header title={random} /> */}
+      {/* <Header title={"Title 2"} />
+      <Header title={"Title 3"} />
+      <Header title={"Title 4"} />
+      <Header title={"Title 5"} />
+      <Header title={"Title 6"} /> */}
+      {/* <CreateTodo /> */}
+
+      {/* <WrapperComponent innerComponent={<TextComponent title="Card One" />} />
+      <WrapperComponent innerComponent={<TextComponent title="Card Two" />} />
+
+      <WrapperComponent>
+        This is cleaner way for implementing card wrapper
+      </WrapperComponent> */}
+      <CallTodoAfterSeconds />
+    </div>
+  )
+}
+
+function TextComponent({title}){
+  return(
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {title}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+  )
+}
+//push down state make state change component that need to pass in component as low as possible to avoid extra 
+// re rendering
+function HeaderWithButton(){
+  const [random, setRandom] = useState("Random number will be generated here")
+  return(
+    <div>
+    <button onClick={()=>{
+            setRandom("My name is "+Math.random())
+          }}>Click me</button>
+          <Header title={random} />
+    </div>
+  )
+}
+
+function CreateTodo(){
+  const [title,setTitle] = useState()
+  const [description,setDescription] = useState()
+  const [todo,setTodo] =  useState([{
+    id:1,
+    title:'Go to gym',
+    description:'Go gym in morning at 6 Am'
+  },
+  {
+    id:2,
+    title:'Go for a yoga',
+    description:'Go for a yoga'
+  },
+  {
+    id:3,
+    title:'Go for aerobics',
+    description:'Go for a aerobics'
+  }
+])
+  return(
+    <>
+      <input type="text" placeholder='Enter Todo Title' onChange={(e)=>{
+          setTitle(e.target.value)
+      }} /> <br /> <br />
+      <input type="text" placeholder='Enter Todo Description' onChange={(e)=>{
+          setDescription(e.target.value)
+      }}  /> <br /> <br />
+      <button onClick={()=>{
+        setTodo([...todo,{
+          id:todo.length+1,
+          title:title,
+          description:description}
+        ])
+        console.log(todo,' todo');
+      }}>Add Todo</button>
+      {
+        todo.map((data,index)=> <Todo key={data.id} title={data.title} description={data.description} id={data.id} /> )
+      }
+      
     </>
   )
 }
