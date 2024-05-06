@@ -12,7 +12,8 @@ export default function CallTodoAfterSeconds() {
             })
         },2000)
       
-    },[])
+    },[todo])
+    
   return (
     <div>
         {
